@@ -15,15 +15,15 @@ def main():
     api_key = os.environ.get("GEMINI_API_KEY")
     client = genai.Client(api_key=api_key)
 
-    print("AI Code Assistant (type 'exit' to quit)")
-    print("--------------------------------------")
+    print("\nCody, Your AI coding assistant (type 'exit' to quit)")
+    print("____________________________________________________")
 
     messages = []
 
     while True:
         user_input = input("\nYou: ")
         if user_input.lower() in ("exit", "quit"):
-            print("Goodbye!")
+            print("\nCody: Goodbye!\n")
             break
 
         messages.append(types.Content(role="user", parts=[types.Part(text=user_input)]))
