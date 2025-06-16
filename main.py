@@ -12,41 +12,37 @@ def main():
     load_dotenv()
 
     verbose = "--verbose" in sys.argv
-    args = [arg for arg in sys.argv[1:] if not arg.startswith("--")]
-
-    if not args:
-        print("AI Code Assistant")
-        print('\nUsage: python main.py "your prompt here" [--verbose]')
-        print('Example: python main.py "How do I build a calculator app?"')
-        sys.exit(1)
-
-    user_prompt = " ".join(args)
-
     api_key = os.environ.get("GEMINI_API_KEY")
     client = genai.Client(api_key=api_key)
 
-    if verbose:
-        print(f"User prompt: {user_prompt}\n")
+    print("AI Code Assistant (type 'exit' to quit)")
+    print("--------------------------------------")
 
-    messages = [
-        types.Content(role="user", parts=[types.Part(text=user_prompt)]),
-    ]
+    messages = []
 
-    iters = 0
     while True:
-        iters += 1
-        if iters > MAX_ITERS:
-            print(f"Maximum iterations ({MAX_ITERS}) reached.")
-            sys.exit(1)
+        user_input = input("\nYou: ")
+        if user_input.lower() in ("exit", "quit"):
+            print("Goodbye!")
+            break
 
-        try:
-            final_response = generate_content(client, messages, verbose)
-            if final_response:
-                print("Final response:")
-                print(final_response)
+        messages.append(types.Content(role="user", parts=[types.Part(text=user_input)]))
+
+        iters = 0
+        while True:
+            iters += 1
+            if iters > MAX_ITERS:
+                print(f"Maximum iterations ({MAX_ITERS}) reached.")
                 break
-        except Exception as e:
-            print(f"Error in generate_content: {e}")
+
+            try:
+                final_response = generate_content(client, messages, verbose)
+                if final_response:
+                    print("\nCody:", final_response)
+                    break
+            except Exception as e:
+                print(f"Error in generate_content: {e}")
+                break
 
 
 def generate_content(client, messages, verbose):

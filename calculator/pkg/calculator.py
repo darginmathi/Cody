@@ -7,28 +7,63 @@ class Calculator:
             "-": lambda a, b: a - b,
             "*": lambda a, b: a * b,
             "/": lambda a, b: a / b,
+            "%": lambda a, b: a % b,
         }
         self.precedence = {
             "+": 1,
             "-": 1,
             "*": 2,
             "/": 2,
+            "%": 2,
+            "(": 0,  # Lowest precedence for opening parenthesis
         }
 
     def evaluate(self, expression):
         if not expression or expression.isspace():
             return None
-        tokens = expression.strip().split()
+        tokens = self._tokenize(expression)
         return self._evaluate_infix(tokens)
+
+    def _tokenize(self, expression):
+        tokens = []
+        current_number = ""
+        for char in expression:
+            if char.isdigit() or char == '.':
+                current_number += char
+            elif char in self.operators or char in ["(", ")"]:
+                if current_number:
+                    tokens.append(current_number)
+                    current_number = ""
+                tokens.append(char)
+            elif char.isspace():
+                if current_number:
+                    tokens.append(current_number)
+                    current_number = ""
+            else:
+                raise ValueError(f"Invalid character: {char}")
+        if current_number:
+            tokens.append(current_number)
+        return tokens
+
 
     def _evaluate_infix(self, tokens):
         values = []
         operators = []
 
         for token in tokens:
-            if token in self.operators:
+            if token == "(":
+                operators.append(token)
+            elif token == ")":
+                while operators and operators[-1] != "(":
+                    self._apply_operator(operators, values)
+                if operators:
+                    operators.pop()  # Remove the opening parenthesis
+                else:
+                    raise ValueError("Unmatched closing parenthesis")
+            elif token in self.operators:
                 while (
                     operators
+                    and operators[-1] != "("
                     and operators[-1] in self.operators
                     and self.precedence[operators[-1]] >= self.precedence[token]
                 ):
@@ -41,6 +76,8 @@ class Calculator:
                     raise ValueError(f"invalid token: {token}")
 
         while operators:
+            if operators[-1] == "(":
+                raise ValueError("Unmatched opening parenthesis")
             self._apply_operator(operators, values)
 
         if len(values) != 1:
