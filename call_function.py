@@ -14,7 +14,7 @@ available_functions = types.Tool(
     ]
 )
 
-functions = {
+function_map = {
     "get_files_info": get_files_info,
     "get_file_content": get_file_content,
     "run_python_file": run_python_file,
@@ -31,7 +31,7 @@ def call_function(function_call_part, verbose=False):
     else:
         print(f" - Calling function: {function_name}")
 
-    if not function_name in functions:
+    if not function_name in function_map:
         return types.Content(
             role="tool",
             parts=[
@@ -42,7 +42,7 @@ def call_function(function_call_part, verbose=False):
             ],
         )
 
-    function_result = functions[function_name](**function_args)
+    function_result = function_map[function_name](**function_args)
 
     return types.Content(
         role="tool",
