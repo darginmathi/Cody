@@ -72,7 +72,7 @@ Once started, you can interact with Cody:
 
 **Code Generation:**
 ```
-You: Write a simple calculator
+User: Write a simple calculator
 Cody: I have written the code for a simple calculator to the file `calculator.py`...
 ```
 

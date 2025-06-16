@@ -21,7 +21,7 @@ def main():
     messages = []
 
     while True:
-        user_input = input("\nYou: ")
+        user_input = input("\nUser: ")
         if user_input.lower() in ("exit", "quit"):
             print("\nCody: Goodbye!\n")
             break
