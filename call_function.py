@@ -1,3 +1,4 @@
+from config import WORKING_DIR
 from google.genai import types
 from functions.get_files_info import schema_get_files_info, get_files_info
 from functions.get_file_content import schema_get_file_content, get_file_content
@@ -23,7 +24,7 @@ function_map = {
 
 def call_function(function_call_part, verbose=False):
     function_name = function_call_part.name
-    function_args = {"working_directory": "./calculator"}
+    function_args = {"working_directory": WORKING_DIR}
     function_args.update(function_call_part.args)
 
     if verbose:
