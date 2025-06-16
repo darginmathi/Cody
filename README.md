@@ -59,21 +59,21 @@ Start Cody with:
 python main.py
 ```
 
-Once started, you can interact with Cody using natural language:
+Once started, you can interact with Cody:
 
 ```
 > Explain how bubble sort works
 > Create a function to reverse a string
-> Run the script in ./examples/hello.py
-> Write a class for a simple calculator
+> Run the script ./examples/hello.py
+> Write a simple calculator
 ```
 
 ## Example Interactions
 
 **Code Generation:**
 ```
-User: Create a function that finds the factorial of a number
-Cody: Here's a factorial function with both recursive and iterative approaches...
+You: Write a simple calculator
+Cody: I have written the code for a simple calculator to the file `calculator.py`...
 ```
 
 **Code Explanation:**
