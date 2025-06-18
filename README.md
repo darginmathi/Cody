@@ -92,3 +92,34 @@ Cody: I'll read the file and analyze its structure for you...
 
 - **Python Only**: Code execution is currently limited to Python scripts
 - **Path Specification**: Need to manually set working directory so that Cody only has access to specified directory
+
+## 🤝 Contributing
+
+### Clone the repo
+
+```bash
+git clone https://github.com/xyz/zipzod@latest
+cd zipzod
+```
+
+### Build the project
+
+```bash
+go build
+```
+
+### Run the project
+
+```bash
+./zipzod -i ./input -o ./output.zip
+```
+
+### Run the tests
+
+```bash
+go test ./...
+```
+
+### Submit a pull request
+
+If you'd like to contribute, please fork the repository and open a pull request to the `main` branch.
